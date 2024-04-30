@@ -1,8 +1,8 @@
-# Expense Tracker App
+# FitFinesse
 
-Checkout hosting here :
+<!-- Checkout hosting here :
 Project Console: https://console.firebase.google.com/project/expense-tracker-7ae76/overview
-Hosting URL: https://expense-tracker-7ae76.web.app
+Hosting URL: https://expense-tracker-7ae76.web.app -->
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
