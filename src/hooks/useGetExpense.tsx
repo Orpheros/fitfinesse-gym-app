@@ -27,7 +27,7 @@ export const useGetExpense = () => {
       const queryTransaction = query(
         expenseRef,
         where("user_id", "==", user_id),
-        orderBy("create_date")
+        orderBy("create_date", "desc")
       );
       unsubscribe = onSnapshot(queryTransaction, (snapshot) => {
         let docs: any[] = [];

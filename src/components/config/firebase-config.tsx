@@ -4,13 +4,13 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAVfMAdDOA0GPLtQk_Em3aLO5TTuDRXUPQ",
-  authDomain: "expense-tracker-7ae76.firebaseapp.com",
-  projectId: "expense-tracker-7ae76",
-  storageBucket: "expense-tracker-7ae76.appspot.com",
-  messagingSenderId: "70769079727",
-  appId: "1:70769079727:web:22fb26276f2361bfc6eb5a",
-  measurementId: "G-18GBGLLY52",
+  apiKey: "AIzaSyAyHn_Nlzu-z7400qmkFDiW905govD8A44",
+  authDomain: "fit-finesse.firebaseapp.com",
+  projectId: "fit-finesse",
+  storageBucket: "fit-finesse.appspot.com",
+  messagingSenderId: "200048079514",
+  appId: "1:200048079514:web:9bcd6430f9792268b2e523",
+  measurementId: "G-HG7EMFGNGZ",
 };
 
 // Initialize Firebase

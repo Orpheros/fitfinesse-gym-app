@@ -1,26 +1,63 @@
 import { Button } from "antd";
 import { auth, provider } from "../components/config/firebase-config";
-import { signInWithPopup } from "firebase/auth";
+import {
+  getRedirectResult,
+  signInWithPopup,
+  signInWithRedirect,
+} from "firebase/auth";
 import { useNavigate, Navigate } from "react-router-dom";
 import { GoogleOutlined } from "@ant-design/icons";
 import { LoginBackground } from "../assets/background";
 import { useGetUserInfo } from "../hooks/useGetUserInfo";
 import styled from "styled-components";
+import { useEffect } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
   const { isAuth } = useGetUserInfo();
 
+  useEffect(() => {
+    getRedirectResult(auth).then((result) => {
+      if (result && result.user) {
+        const userAuth = {
+          user_id: result.user.uid,
+          name: result.user.displayName,
+          photo: result.user.photoURL,
+          isAuth: true,
+        };
+        localStorage.setItem("auth", JSON.stringify(userAuth));
+        navigate("/expense-tracker");
+      }
+    });
+  }, []);
+
   const signInGoogle = async () => {
-    const result = await signInWithPopup(auth, provider);
-    const userAuth = {
-      user_id: result.user.uid,
-      name: result.user.displayName,
-      photo: result.user.photoURL,
-      isAuth: true,
-    };
-    localStorage.setItem("auth", JSON.stringify(userAuth));
-    navigate("/expense-tracker");
+    if (window.matchMedia("(min-width: 576px)").matches) {
+      try {
+        const result = await signInWithPopup(auth, provider);
+        const userAuth = {
+          user_id: result.user.uid,
+          name: result.user.displayName,
+          photo: result.user.photoURL,
+          isAuth: true,
+        };
+        localStorage.setItem("auth", JSON.stringify(userAuth));
+        navigate("/expense-tracker");
+      } catch (error) {
+        console.error(error);
+        navigate("/");
+      }
+    } else {
+      try {
+        provider.setCustomParameters({
+          prompt: "select_account",
+        });
+        await signInWithRedirect(auth, provider);
+      } catch (error) {
+        console.error(error);
+        navigate("/");
+      }
+    }
   };
   const LoginCard = styled.div`
     backdrop-filter: blur(7px) saturate(180%);

@@ -1,16 +1,14 @@
-import { FloatButton } from "antd";
 import Layout from "../components/layout/layout";
-import { useNavigate } from "react-router-dom";
 import { useGetExpense } from "../hooks/useGetExpense";
 import { format } from "../helper/formating-helper";
 import LoadingPage from "../components/layout/loading";
 import { useGetUserInfo } from "../hooks/useGetUserInfo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoneyBill } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 // https://colorhunt.co/palette/f5f7f8f4ce14495e5745474b
 const ExpenseTracker = () => {
-  const navigate = useNavigate();
   const { transactions, loading, totalTransactions } = useGetExpense();
   const { name } = useGetUserInfo();
   const { balance } = totalTransactions;
@@ -19,19 +17,9 @@ const ExpenseTracker = () => {
     <>
       {!loading ? (
         <Layout>
-          <FloatButton
-            icon="+"
-            style={{
-              height: "48px",
-              width: "48px",
-              right: "2.5rem",
-              bottom: "4rem",
-            }}
-            onClick={() => navigate("/expense-tracker-add")}
-          />
-          <div className="d-flex justify-content-center align-items-center">
-            <div>
-              <div className="m-3">
+          <div className="d-flex justify-content-center">
+            <div className="m-3">
+              <div>
                 <h4>Expense Tracker</h4>
                 <div
                   className="card shadow border-0"
@@ -61,13 +49,16 @@ const ExpenseTracker = () => {
                   </div>
                 </div>
               </div>
-              <div className="m-3 mt-5">
+              <div className="mt-4">
                 <div className="d-flex justify-content-between">
                   <h4>Transactions</h4>
-                  <p>View Detailed</p>
+                  <Link to="/expense-tracker-list" className="navbar-brand">
+                    <p>View Detailed</p>
+                  </Link>
                 </div>
-                {transactions.map((transaction: any) => {
-                  const { description, amount, expense_type } = transaction;
+                {transactions.slice(0, 5).map((transaction: any) => {
+                  const { description, amount, expense_type, create_date } =
+                    transaction;
                   return (
                     <div
                       className="card shadow border-0 mb-2"
@@ -86,8 +77,21 @@ const ExpenseTracker = () => {
                           </div>
                           <div className="col-10 align-items-center d-flex">
                             <div className="d-flex justify-content-between w-100">
-                              <h6 className="mb-0">{description}</h6>
-                              <div className="d-flex">
+                              <div>
+                                <h6
+                                  className="mb-0 d-inline-block text-truncate"
+                                  style={{ maxWidth: "130px" }}
+                                >
+                                  {description}
+                                </h6>
+                                <p
+                                  className="mb-0"
+                                  style={{ fontSize: "13px", color: "gray" }}
+                                >
+                                  {format.date(create_date)}
+                                </p>
+                              </div>
+                              <div className="d-flex align-items-center">
                                 Rp.&nbsp;
                                 <p
                                   className={`mb-0 ${

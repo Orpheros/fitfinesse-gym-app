@@ -1,10 +1,12 @@
 import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useGetUserInfo } from "../../hooks/useGetUserInfo";
+import { auth } from "../config/firebase-config";
 const Navbar = () => {
   const navigate = useNavigate();
   const { photo } = useGetUserInfo();
   const handleLogout = () => {
+    auth.signOut();
     localStorage.removeItem("auth");
     navigate("/");
   };
