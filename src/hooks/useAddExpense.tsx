@@ -1,10 +1,10 @@
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../components/config/firebase-config";
-import { useGetUserInfo } from "./useGetUserInfo";
+import { useGetUser } from "./useGetUser";
 
 export const useAddExpense = () => {
   const expenseRef = collection(db, "expense");
-  const { user_id } = useGetUserInfo();
+  const { user_id } = useGetUser();
   const addExpense = async ({ description, amount, expense_type }: any) => {
     await addDoc(expenseRef, {
       user_id,

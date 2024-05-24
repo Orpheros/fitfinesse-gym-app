@@ -8,7 +8,7 @@ import {
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../components/config/firebase-config";
-import { useGetUserInfo } from "./useGetUserInfo";
+import { useGetUser } from "./useGetUser";
 
 export const useGetExpense = () => {
   const [transactions, setTransactions] = useState([]);
@@ -19,7 +19,7 @@ export const useGetExpense = () => {
     expense: 0,
   });
   const expenseRef = collection(db, "expense");
-  const { user_id } = useGetUserInfo();
+  const { user_id } = useGetUser();
 
   const getTransactions = async () => {
     let unsubscribe: Unsubscribe;

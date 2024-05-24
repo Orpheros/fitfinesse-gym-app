@@ -2,7 +2,7 @@ import Layout from "../components/layout/layout";
 import { useGetExpense } from "../hooks/useGetExpense";
 import { format } from "../helper/formating-helper";
 import LoadingPage from "../components/layout/loading";
-import { useGetUserInfo } from "../hooks/useGetUserInfo";
+import { useGetUser } from "../hooks/useGetUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoneyBill } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 // https://colorhunt.co/palette/f5f7f8f4ce14495e5745474b
 const ExpenseTracker = () => {
   const { transactions, loading, totalTransactions } = useGetExpense();
-  const { name } = useGetUserInfo();
+  const { name } = useGetUser();
   const { balance } = totalTransactions;
 
   return (

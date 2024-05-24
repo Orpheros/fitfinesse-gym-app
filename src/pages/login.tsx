@@ -1,5 +1,5 @@
 import { Button } from "antd";
-import { auth, provider } from "../components/config/firebase-config";
+import { auth, db, provider } from "../components/config/firebase-config";
 import {
   getRedirectResult,
   signInWithPopup,
@@ -8,13 +8,29 @@ import {
 import { useNavigate, Navigate } from "react-router-dom";
 import { GoogleOutlined } from "@ant-design/icons";
 import { LoginBackground } from "../assets/background";
-import { useGetUserInfo } from "../hooks/useGetUserInfo";
+import { useGetUser } from "../hooks/useGetUser";
 import styled from "styled-components";
 import { useEffect } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { isAuth } = useGetUserInfo();
+  const { isAuth } = useGetUser();
+  const mobile = window.matchMedia("(min-width: 576px)").matches;
+
+  const gymInfo = [
+    {
+      gym_id: 1,
+      gym_name: "ftl_gym",
+      loyalty_point: 1,
+      mileage: [
+        {
+          mileage_id: 1,
+          mileage_tier: 5,
+          mileage_reward: "hand bag",
+        },
+      ],
+    },
+  ];
 
   useEffect(() => {
     getRedirectResult(auth).then((result) => {
@@ -23,26 +39,34 @@ const Login = () => {
           user_id: result.user.uid,
           name: result.user.displayName,
           photo: result.user.photoURL,
+          last_login: new Date().toISOString(),
           isAuth: true,
+          gym: gymInfo,
         };
         localStorage.setItem("auth", JSON.stringify(userAuth));
-        navigate("/expense-tracker");
+        console.log("asdasd", userAuth);
+
+        // Call the function to save user data
+        // saveUserDataToFirestore(userAuth);
+
+        // navigate("/dashboard");
       }
     });
   }, []);
 
   const signInGoogle = async () => {
-    if (window.matchMedia("(min-width: 576px)").matches) {
+    if (mobile) {
       try {
         const result = await signInWithPopup(auth, provider);
         const userAuth = {
           user_id: result.user.uid,
           name: result.user.displayName,
           photo: result.user.photoURL,
+          last_login: new Date().toISOString(),
           isAuth: true,
         };
         localStorage.setItem("auth", JSON.stringify(userAuth));
-        navigate("/expense-tracker");
+        navigate("/dashboard");
       } catch (error) {
         console.error(error);
         navigate("/");
@@ -69,7 +93,7 @@ const Login = () => {
   `;
 
   if (isAuth) {
-    return <Navigate to="/expense-tracker" />;
+    return <Navigate to="/dashboard" />;
   }
 
   return (

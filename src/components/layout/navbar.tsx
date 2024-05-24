@@ -1,29 +1,51 @@
-import { Button } from "antd";
-import { useNavigate } from "react-router-dom";
-import { useGetUserInfo } from "../../hooks/useGetUserInfo";
-import { auth } from "../config/firebase-config";
+import { Badge } from "antd";
+import { IoNotifications } from "react-icons/io5";
 const Navbar = () => {
-  const navigate = useNavigate();
-  const { photo } = useGetUserInfo();
-  const handleLogout = () => {
-    auth.signOut();
-    localStorage.removeItem("auth");
-    navigate("/");
-  };
+  // const navigate = useNavigate();
+  // const { photo } = useGetUserInfo();
+  const show = true;
+  // const handleLogout = () => {
+  //   auth.signOut();
+  //   localStorage.removeItem("auth");
+  //   navigate("/");
+  // };
+  const blue = "#1E56A0";
   return (
     <>
       <nav
         className="navbar navbar-expand navbar-light"
-        style={{ background: "#495E57", height: "50px" }}
+        style={{
+          background: blue,
+          height: "100px",
+          borderRadius: "0px 0px 24px 24px",
+        }}
       >
-        <div className="container-fluid">
+        <div
+          className="container-fluid"
+          style={{
+            paddingLeft: "1.1rem",
+            paddingRight: "1.1rem",
+          }}
+        >
           <div>
-            <a className="nav-link text-white" href="#">
-              Dashboard
+            <a
+              className="nav-link text-white"
+              href="#"
+              style={{
+                fontSize: "20px",
+                fontWeight: "bold",
+                letterSpacing: "0.6px",
+              }}
+            >
+              FitFinesse
             </a>
           </div>
-
-          <div className="d-flex align-items-center">
+          <span>
+            <Badge count={show ? 5 : 0}>
+              <IoNotifications size={"22px"} color="white" />
+            </Badge>
+          </span>
+          {/* <div className="d-flex align-items-center">
             <div>
               <a className=" d-flex align-items-center" href="#">
                 <img
@@ -40,7 +62,7 @@ const Navbar = () => {
                 </Button>
               </a>
             </div>
-          </div>
+          </div> */}
         </div>
       </nav>
     </>
