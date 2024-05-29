@@ -8,7 +8,7 @@ import {
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../components/config/firebase-config";
-import { useGetUser } from "./useGetUser";
+import { useGetUser } from "./user/useGetUser";
 
 export const useGetExpense = () => {
   const [transactions, setTransactions] = useState([]);

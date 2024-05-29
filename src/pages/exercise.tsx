@@ -71,7 +71,7 @@ const ExercisePage = () => {
               >
                 {/* Card Exercise */}
                 <ExerciseCardComponent
-                  onClick={() => handleNavigate("/exercise/list")}
+                  onClick={() => handleNavigate("/exercise/list/back")}
                   label="Chest"
                   backgroundPath="src/assets/img/image3.png"
                   i1

@@ -3,15 +3,18 @@ import { useState } from "react";
 import { Button, Modal, Steps } from "antd";
 import Footer from "../components/layout/footer";
 import { QrScanner } from "@yudiel/react-qr-scanner";
-import { useGetUser } from "../hooks/useGetUser";
+import { useGetUser } from "../hooks/user/useGetUser";
+import { useGetGyms } from "../hooks/gyms/useGetGyms";
+import LoadingPage from "../components/layout/loading";
 
 const LoyaltyPage = () => {
   const [result, setResult] = useState("");
-  const { last_login } = useGetUser();
+  const { last_login, user_id } = useGetUser();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dailyScan, setDailyScan] = useState(false);
   const [loyaltyProgress, setLoyaltyProgress] = useState([]);
   const [currentLoyaltyProgress, setcurrentLoyaltyProgress] = useState(0);
+  const { gyms, loading } = useGetGyms();
 
   const handleScan = (result: any) => {
     if (result && !dailyScan) {
@@ -45,11 +48,15 @@ const LoyaltyPage = () => {
     setIsModalOpen(false);
   };
 
+  if (loading) {
+    return <LoadingPage loading={loading} />;
+  }
+
   return (
     <>
       <div className=" h-100">
         <div className="d-flex flex-column align-items-center">
-          <QrScanner
+          {/* <QrScanner
             audio={false}
             scanDelay={2000}
             onDecode={handleScan}
@@ -59,17 +66,6 @@ const LoyaltyPage = () => {
               objectFit: "cover",
               height: "100%",
             }}
-          />
-          {/* <Reader
-            style={{
-              objectFit: "cover",
-              height: "80vh",
-              width: "100%",
-              // zoom: "200%",
-            }}
-            delay={1000}
-            onError={handleError}
-            onScan={handleScan}
           /> */}
         </div>
         <div className="container-fluid d-flex gap-3 py-2">
@@ -119,6 +115,7 @@ const LoyaltyPage = () => {
         </div>
         <div>{result}</div>
         <div>Last login : {last_login}</div>
+        <div>UID : {user_id}</div>
         <Footer />
       </div>
     </>

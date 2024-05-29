@@ -8,7 +8,7 @@ import {
 import { useNavigate, Navigate } from "react-router-dom";
 import { GoogleOutlined } from "@ant-design/icons";
 import { LoginBackground } from "../assets/background";
-import { useGetUser } from "../hooks/useGetUser";
+import { useCheckUser, useGetUser } from "../hooks/user/useGetUser";
 import styled from "styled-components";
 import { useEffect } from "react";
 
@@ -33,7 +33,7 @@ const Login = () => {
   ];
 
   useEffect(() => {
-    getRedirectResult(auth).then((result) => {
+    getRedirectResult(auth).then(async (result) => {
       if (result && result.user) {
         const userAuth = {
           user_id: result.user.uid,
@@ -43,13 +43,13 @@ const Login = () => {
           isAuth: true,
           gym: gymInfo,
         };
-        localStorage.setItem("auth", JSON.stringify(userAuth));
-        console.log("asdasd", userAuth);
+        // localStorage.setItem("auth", JSON.stringify(userAuth));
 
         // Call the function to save user data
         // saveUserDataToFirestore(userAuth);
-
-        // navigate("/dashboard");
+        const res = await useCheckUser(userAuth);
+        localStorage.setItem("auth", JSON.stringify(res));
+        navigate("/dashboard");
       }
     });
   }, []);

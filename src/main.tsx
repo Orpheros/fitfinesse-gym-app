@@ -11,6 +11,7 @@ import RegisterPage from "./pages/register.tsx";
 import ExercisePage from "./pages/exercise.tsx";
 import LoyaltyPage from "./pages/loyalty.tsx";
 import ExerciseListPage from "./pages/exercise-list.tsx";
+import ErrorPage from "./components/layout/error.tsx";
 
 declare global {
   interface Window {
@@ -35,7 +36,7 @@ const router = createHashRouter([
         element: <ExercisePage />,
       },
       {
-        path: "list",
+        path: "list/:category",
         element: <ExerciseListPage />,
       },
     ],
@@ -51,6 +52,10 @@ const router = createHashRouter([
   {
     path: "/account",
     element: <Account />,
+  },
+  {
+    path: "*",
+    element: <ErrorPage />,
   },
 ]);
 

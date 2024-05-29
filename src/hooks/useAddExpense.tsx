@@ -1,6 +1,6 @@
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../components/config/firebase-config";
-import { useGetUser } from "./useGetUser";
+import { useGetUser } from "./user/useGetUser";
 
 export const useAddExpense = () => {
   const expenseRef = collection(db, "expense");

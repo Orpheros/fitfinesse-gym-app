@@ -2,16 +2,11 @@ import React from "react";
 import { Modal, Space, Input, Button, TableProps } from "antd";
 import { FaCirclePlus, FaWeightScale } from "react-icons/fa6";
 import ModalTable from "./table.component"; // Make sure the path is correct
-
-interface DataType {
-  key: React.Key;
-  weight: string;
-  date: string;
-}
+import { DataType } from "../interface/datatype-weight.interface";
 
 interface DashboardActionCardProps {
-  weight: number;
-  bmiMessage: string;
+  value: number;
+  message: string;
   isModalOpen: boolean;
   handleOk: () => void;
   handleCancel: () => void;
@@ -21,12 +16,13 @@ interface DashboardActionCardProps {
   showModal: () => void;
   columns: TableProps<DataType>["columns"];
   dataSource: DataType[];
-  blue: string;
 }
 
+const blue = "#2E5FD4";
+
 const DashboardActionCard: React.FC<DashboardActionCardProps> = ({
-  weight,
-  bmiMessage,
+  value,
+  message,
   isModalOpen,
   handleOk,
   handleCancel,
@@ -36,7 +32,6 @@ const DashboardActionCard: React.FC<DashboardActionCardProps> = ({
   showModal,
   columns,
   dataSource,
-  blue,
 }) => {
   return (
     <div className="row d-flex justify-content-center">
@@ -53,7 +48,7 @@ const DashboardActionCard: React.FC<DashboardActionCardProps> = ({
                   margin: 0,
                 }}
               >
-                {weight} kg
+                {value} kg
               </p>
             </div>
             <div>
@@ -65,7 +60,7 @@ const DashboardActionCard: React.FC<DashboardActionCardProps> = ({
                   fontSize: "12px",
                 }}
               >
-                {bmiMessage}
+                {message}
               </p>
             </div>
           </div>
@@ -85,7 +80,7 @@ const DashboardActionCard: React.FC<DashboardActionCardProps> = ({
         onOk={handleOk}
         onCancel={handleCancel}
         width={1000}
-        maskClosable
+        maskClosable={false}
         cancelButtonProps={{ style: { display: "none" } }}
       >
         <Space.Compact style={{ width: "100%" }}>

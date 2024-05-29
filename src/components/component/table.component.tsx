@@ -1,11 +1,6 @@
 import { TableProps, Table } from "antd";
 import React from "react";
-
-interface DataType {
-  key: string;
-  date: string;
-  weight: string;
-}
+import { DataType } from "../interface/datatype-weight.interface";
 
 const ModalTable: React.FC<{
   columns: TableProps<DataType>["columns"];

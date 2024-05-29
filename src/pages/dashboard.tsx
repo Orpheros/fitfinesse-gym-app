@@ -4,7 +4,7 @@ import { useGetExpense } from "../hooks/useGetExpense";
 import Chart from "react-apexcharts";
 import DashboardCardComponent from "../components/component/dashboard-card.component";
 import { FaCirclePlus, FaWeightScale } from "react-icons/fa6";
-import { useGetUser } from "../hooks/useGetUser";
+import { useGetUser } from "../hooks/user/useGetUser";
 import { useState } from "react";
 import { Button, Input, Modal, Space } from "antd";
 import DashboardActionCard from "../components/component/dashboard-action-card.component";
@@ -15,6 +15,7 @@ const DashboardPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [count, setCount] = useState(0);
+  const [avgWeight, setAvgWeight] = useState(0);
 
   const [dataSource, setDataSource] = useState<
     { key: string; date: string; weight: string }[]
@@ -48,13 +49,13 @@ const DashboardPage = () => {
   ];
 
   const handleAddTable = () => {
-    console.log("asdasdasd", inputValue);
+    if (inputValue === "") return;
     const newData = {
       key: count.toString(),
       date: new Date().toDateString(),
       weight: inputValue,
     };
-    setDataSource([...dataSource, newData]);
+    setDataSource([newData, ...dataSource]);
     setCount(count + 1);
     setInputValue("");
   };
@@ -99,7 +100,12 @@ const DashboardPage = () => {
   };
 
   const handleOk = () => {
+    const avgWeight = dataSource.reduce((acc, curr) => {
+      return acc + parseInt(curr.weight);
+    }, 0);
+    console.log("asdasda", avgWeight);
     setIsModalOpen(false);
+    setAvgWeight(avgWeight / dataSource.length);
   };
 
   const handleCancel = () => {
@@ -229,9 +235,8 @@ const DashboardPage = () => {
               >
                 <div className="card-body">
                   <DashboardActionCard
-                    weight={70} // Example weight
-                    bmiMessage="You have healthy BMI" // Example message
-                    isModalOpen={isModalOpen}
+                    value={Number(avgWeight.toFixed(2))}
+                    message="You have healthy BMI"
                     handleOk={handleOk}
                     handleCancel={handleCancel}
                     inputValue={inputValue}
@@ -240,75 +245,8 @@ const DashboardPage = () => {
                     showModal={showModal}
                     columns={columns}
                     dataSource={dataSource}
-                    blue={blue}
+                    isModalOpen={isModalOpen}
                   />
-
-                  {/* <div className="row d-flex justify-content-center">
-                    <div className="col-3 d-flex justify-content-center">
-                      <FaWeightScale size={60} style={{ color: blue }} />
-                    </div>
-                    <div className="col-9">
-                      <div className="d-flex h-100 align-items-center justify-content-between">
-                        <div className="d-flex flex-column">
-                          <div>
-                            <p
-                              style={{
-                                fontWeight: "bold",
-                                margin: 0,
-                              }}
-                            >
-                              70 kg
-                            </p>
-                          </div>
-                          <div>
-                            <p
-                              style={{
-                                fontWeight: "bold",
-                                margin: 0,
-                                color: "gray",
-                                fontSize: "12px",
-                              }}
-                            >
-                              You have healthy BMI
-                            </p>
-                          </div>
-                        </div>
-                        <div>
-                          <FaCirclePlus
-                            size={35}
-                            style={{ color: blue }}
-                            onClick={showModal}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <Modal
-                    title="Weight"
-                    centered
-                    open={isModalOpen}
-                    onOk={handleOk}
-                    onCancel={handleCancel}
-                    width={1000}
-                    maskClosable
-                    cancelButtonProps={{ style: { display: "none" } }}
-                  >
-                    <Space.Compact style={{ width: "100%" }}>
-                      <Input
-                        placeholder="Input weight"
-                        value={inputValue}
-                        onChange={(e) => {
-                          setInputValue(e.target.value);
-                        }}
-                      />
-                      <Button onClick={handleAddTable} type="primary">
-                        +
-                      </Button>
-                    </Space.Compact>
-                    <div className="rounded py-2">
-                      <ModalTable columns={columns} data={dataSource} />
-                    </div>
-                  </Modal> */}
                 </div>
               </div>
             </div>

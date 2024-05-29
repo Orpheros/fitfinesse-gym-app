@@ -2,7 +2,7 @@ import Layout from "../components/layout/layout";
 import { useGetExpense } from "../hooks/useGetExpense";
 import { format } from "../helper/formating-helper";
 import LoadingPage from "../components/layout/loading";
-import { useGetUser } from "../hooks/useGetUser";
+import { useGetUser } from "../hooks/user/useGetUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoneyBill } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
