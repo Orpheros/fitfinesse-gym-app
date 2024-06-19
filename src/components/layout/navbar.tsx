@@ -1,15 +1,9 @@
-import { Badge } from "antd";
-import { IoNotifications } from "react-icons/io5";
 const Navbar = () => {
-  // const navigate = useNavigate();
-  // const { photo } = useGetUserInfo();
-  const show = true;
-  // const handleLogout = () => {
-  //   auth.signOut();
-  //   localStorage.removeItem("auth");
-  //   navigate("/");
-  // };
+  // const show = true;
   const blue = "#1E56A0";
+  // if (!loading) {
+  //   return <LoadingPage></LoadingPage>;
+  // }
   return (
     <>
       <nav
@@ -40,29 +34,11 @@ const Navbar = () => {
               FitFinesse
             </a>
           </div>
-          <span>
+          {/* <span>
             <Badge count={show ? 5 : 0}>
               <IoNotifications size={"22px"} color="white" />
             </Badge>
-          </span>
-          {/* <div className="d-flex align-items-center">
-            <div>
-              <a className=" d-flex align-items-center" href="#">
-                <img
-                  src={photo}
-                  className="rounded-circle"
-                  height="30"
-                  loading="lazy"
-                />
-                <Button
-                  className="ms-lg-4 ms-3 me-lg-3 me-2"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </Button>
-              </a>
-            </div>
-          </div> */}
+          </span> */}
         </div>
       </nav>
     </>

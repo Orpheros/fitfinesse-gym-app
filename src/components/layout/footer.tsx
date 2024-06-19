@@ -3,10 +3,11 @@ import { Link, useLocation } from "react-router-dom";
 // import { auth } from "../config/firebase-config";
 import { UserOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
-import { IoBarbellOutline } from "react-icons/io5";
+import { IoBarbellOutline, IoChatbubblesOutline } from "react-icons/io5";
 import { PiQrCode } from "react-icons/pi";
 import { TbReportAnalytics } from "react-icons/tb";
 import { BiHomeAlt } from "react-icons/bi";
+import { blue } from "../interface/user.interface";
 const Footer = () => {
   const location = useLocation();
   const [isActive, setIsActive] = useState("");
@@ -20,11 +21,11 @@ const Footer = () => {
 
   const gray = "#BFC8D3";
   const lightBlue = "#E2EEFF";
-  const blue = "#2E5FD4";
 
   const dashboardPage = "/dashboard";
   const exercisePage = "/exercise";
-  const exerciseListPage = "/exercise/list";
+  const reportPage = "/community";
+  const exerciseListPattern = /^\/exercise\/list\/.*$/;
   const loyaltyPage = "/loyalty";
 
   useEffect(() => {
@@ -78,7 +79,7 @@ const Footer = () => {
             className="d-flex align-items-center align-items-stretch gap-3 rounded"
             style={{
               background:
-                isActive === exercisePage || isActive == exerciseListPage
+                isActive === exercisePage || exerciseListPattern.test(isActive)
                   ? lightBlue
                   : "",
             }}
@@ -95,7 +96,8 @@ const Footer = () => {
                 style={{
                   fontSize: "1.7rem",
                   color:
-                    isActive === exercisePage || isActive == exerciseListPage
+                    isActive === exercisePage ||
+                    exerciseListPattern.test(isActive)
                       ? blue
                       : gray,
                 }}
@@ -127,21 +129,21 @@ const Footer = () => {
           <div
             className="d-flex align-items-center align-items-stretch gap-3 rounded"
             style={{
-              background: isActive === "/expense-tracker-add" ? lightBlue : "",
+              background: isActive === reportPage ? lightBlue : "",
             }}
           >
             <Link
-              to="/expense-tracker-add"
+              to={reportPage}
               style={{
                 justifyContent: "center",
                 display: "flex",
                 margin: "10px",
               }}
             >
-              <TbReportAnalytics
+              <IoChatbubblesOutline
                 style={{
                   fontSize: "1.7rem",
-                  color: isActive === "/expense-tracker-add" ? blue : gray,
+                  color: isActive === reportPage ? blue : gray,
                 }}
               />
             </Link>

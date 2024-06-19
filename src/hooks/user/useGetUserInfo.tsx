@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
 import { db } from "../../components/config/firebase-config";
-import {
-  collection,
-  query,
-  DocumentData,
-  onSnapshot,
-  where,
-} from "firebase/firestore";
+import { collection, query, onSnapshot, where } from "firebase/firestore";
 import { useGetUser } from "./useGetUser";
+import { useNavigate } from "react-router-dom";
+import { User } from "../../components/interface/user.interface";
 
 export const useGetUserInfo = () => {
-  const [userData, setUserData] = useState<any>({});
+  const [userData, setUserData] = useState<User>({} as any);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const { user_id } = useGetUser();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!user_id) {
+      navigate("/");
+    }
     const usersRef = collection(db, "users");
     const q = query(usersRef, where("user_id", "==", user_id));
 
@@ -26,7 +26,7 @@ export const useGetUserInfo = () => {
         // console.log("usersList", usersList[0]);
         // setUserData(usersList[0]);
         const userDoc = snapshot.docs[0];
-        setUserData({ ...userDoc.data() });
+        setUserData({ ...userDoc.data() } as User);
         setLoading(false);
       },
       (error) => {

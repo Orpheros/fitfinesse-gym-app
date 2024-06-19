@@ -13,13 +13,25 @@ interface Gym {
 
 export const useGetGyms = () => {
   const [gyms, setGyms] = useState<Gym[]>([]);
+  const [gymsList, setGymsList] = useState([]);
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState(true);
   const { userData } = useGetUserInfo();
 
   useEffect(() => {
-    console.log("userdata", userData);
     if (!userData.gym_id) return;
+    // const gymId = 1;
+
+    // const gymExercisesRef = collection(db, "gyms");
+    // const q = query(gymExercisesRef);
+
+    // onSnapshot(q, (snapshot) => {
+    //   snapshot.forEach((doc) => {
+    //     console.log("aa", doc.data());
+    //   });
+    //   // console.log("aaaa", snapshot);
+    //   setLoading(false);
+    // });
 
     const gymsRef = collection(db, "gyms");
     const q = query(gymsRef, where("gym_id", "==", userData.gym_id));
@@ -43,7 +55,46 @@ export const useGetGyms = () => {
     );
 
     return () => unsubscribe();
-  }, [userData]);
+  }, [userData, gyms]);
 
-  return { gyms, error, loading };
+  useEffect(() => {
+    if (!userData.gym_id) return;
+    // const gymId = 1;
+
+    // const gymExercisesRef = collection(db, "gyms");
+    // const q = query(gymExercisesRef);
+
+    // onSnapshot(q, (snapshot) => {
+    //   snapshot.forEach((doc) => {
+    //     console.log("aa", doc.data());
+    //   });
+    //   // console.log("aaaa", snapshot);
+    //   setLoading(false);
+    // });
+
+    const gymsRef = collection(db, "gyms");
+    const q = query(gymsRef);
+
+    const unsubscribe = onSnapshot(
+      q,
+      (snapshot) => {
+        let docs: any[] = [];
+        snapshot.forEach((el) => {
+          const data = el.data();
+          const id = el.id;
+          docs.push({ ...data, id });
+        });
+        setGymsList(docs as any);
+        setLoading(false);
+      },
+      (error) => {
+        setError(error);
+        setLoading(false);
+      }
+    );
+
+    return () => unsubscribe();
+  }, [userData, gyms]);
+
+  return { gyms, error, loading, gymsList };
 };

@@ -14,25 +14,11 @@ import { useEffect } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { isAuth } = useGetUser();
   const mobile = window.matchMedia("(min-width: 576px)").matches;
-
-  const gymInfo = [
-    {
-      gym_id: 1,
-      gym_name: "ftl_gym",
-      loyalty_point: 1,
-      mileage: [
-        {
-          mileage_id: 1,
-          mileage_tier: 5,
-          mileage_reward: "hand bag",
-        },
-      ],
-    },
-  ];
+  const isLogined = localStorage.getItem("auth");
 
   useEffect(() => {
+    console.log("a", isLogined);
     getRedirectResult(auth).then(async (result) => {
       if (result && result.user) {
         const userAuth = {
@@ -41,7 +27,6 @@ const Login = () => {
           photo: result.user.photoURL,
           last_login: new Date().toISOString(),
           isAuth: true,
-          gym: gymInfo,
         };
         // localStorage.setItem("auth", JSON.stringify(userAuth));
 
@@ -92,7 +77,7 @@ const Login = () => {
     padding: 2rem;
   `;
 
-  if (isAuth) {
+  if (isLogined) {
     return <Navigate to="/dashboard" />;
   }
 

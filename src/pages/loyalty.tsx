@@ -1,33 +1,91 @@
 // import Reader from "react-qr-scanner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Modal, Steps } from "antd";
 import Footer from "../components/layout/footer";
 import { QrScanner } from "@yudiel/react-qr-scanner";
 import { useGetUser } from "../hooks/user/useGetUser";
 import { useGetGyms } from "../hooks/gyms/useGetGyms";
 import LoadingPage from "../components/layout/loading";
+import { useGetGymExercises } from "../hooks/gyms/useGetGymsExercises";
+import { handleScan } from "../hooks/user/useScanLoyalty";
+import Swal from "sweetalert2";
+import { useGetUserInfo } from "../hooks/user/useGetUserInfo";
+import { DynamicSteps } from "../components/component/dynamic-steps.component";
 
 const LoyaltyPage = () => {
   const [result, setResult] = useState("");
-  const { last_login, user_id } = useGetUser();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dailyScan, setDailyScan] = useState(false);
   const [loyaltyProgress, setLoyaltyProgress] = useState([]);
-  const [currentLoyaltyProgress, setcurrentLoyaltyProgress] = useState(0);
-  const { gyms, loading } = useGetGyms();
+  const [currentLoyaltyProgress, setCurrentLoyaltyProgress] = useState(0);
+  const { loading, userGyms } = useGetGymExercises();
+  const { gyms } = useGetGyms();
+  const { userData } = useGetUserInfo();
+  const [userGym, setUserGym] = useState<any>({});
+  const specialSteps = [
+    { index: 5, title: "Pocary" },
+    { index: 10, title: "Baju" },
+    { index: 15, title: "Discount 10% Food" },
+  ];
 
-  const handleScan = (result: any) => {
-    if (result && !dailyScan) {
+  useEffect(() => {
+    if (gyms.length > 0) {
+      setUserGym(gyms[0]);
+    }
+  });
+
+  // const handleScan = (result: any) => {
+  //   if (result && !dailyScan) {
+  //     try {
+  //       const res = JSON.parse(result);
+  //       console.log("aaaaa", res);
+  //       if (res.amount === 1) {
+  //         setcurrentLoyaltyProgress((prevProgress) => prevProgress + 1);
+  //       }
+  //       setResult(result);
+  //       setDailyScan(true);
+  //     } catch (error) {
+  //       console.error("Invalid JSON format:", error);
+  //     }
+  //   }
+  // };
+
+  const handleScanRes = async (qrData: any) => {
+    if (!dailyScan) {
       try {
-        const res = JSON.parse(result);
-        console.log("aaaaa", res);
-        if (res.amount === 1) {
-          setcurrentLoyaltyProgress((prevProgress) => prevProgress + 1);
+        const res = await handleScan(
+          userData.user_id,
+          qrData,
+          userGym.gym_name
+        );
+        setResult(res.message);
+        if (res.isError) {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: res.message,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+          }).then((res) => {
+            if (res.isConfirmed) {
+              window.location.reload();
+            }
+          });
         }
-        setResult(result);
+        if (res.message === "Loyalty point added") {
+          Swal.fire({
+            icon: "success",
+            text: res.message,
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+          });
+          setCurrentLoyaltyProgress((prevProgress) => prevProgress + 1);
+        }
         setDailyScan(true);
       } catch (error) {
-        console.error("Invalid JSON format:", error);
+        console.error("Error scanning QR code:", error);
+        setResult("Error scanning QR code");
       }
     }
   };
@@ -54,19 +112,19 @@ const LoyaltyPage = () => {
 
   return (
     <>
-      <div className=" h-100">
+      <div className="h-100">
         <div className="d-flex flex-column align-items-center">
-          {/* <QrScanner
+          <QrScanner
             audio={false}
             scanDelay={2000}
-            onDecode={handleScan}
-            // onResult={handleScan}
+            onDecode={handleScanRes}
+            // onResult={handleScanRes}
             onError={handleError}
             containerStyle={{
               objectFit: "cover",
-              height: "100%",
+              height: "80vh",
             }}
-          /> */}
+          />
         </div>
         <div className="container-fluid d-flex gap-3 py-2">
           {/* <div>{result}</div> */}
@@ -79,43 +137,26 @@ const LoyaltyPage = () => {
             View Loyalty Points
           </Button>
           <Modal
-            title="Basic Modal"
+            title={`${userGym.gym_name} Progress -   ${
+              userData.loyalty_points ? userData.loyalty_points : "0"
+            } / ${userData.max_progress ? userData.max_progress : "-"}`}
             centered
             open={isModalOpen}
             onOk={handleOk}
             onCancel={handleCancel}
             width={1000}
+            style={{ height: "50vh" }}
           >
-            <Steps
-              size="small"
-              current={currentLoyaltyProgress}
-              direction="horizontal"
-              items={[
-                {
-                  title: "Finished",
-                },
-                {
-                  title: "In Progress",
-                },
-                {
-                  title: "Waiting",
-                },
-                {
-                  title: "",
-                },
-                {
-                  title: "",
-                },
-                {
-                  title: "",
-                },
-              ]}
-            />
+            <div style={{ maxHeight: "calc(50vh - 55px)", overflowY: "auto" }}>
+              <DynamicSteps
+                userData={userData}
+                maxSteps={userData.max_progress}
+                specialSteps={specialSteps}
+              />
+            </div>
           </Modal>
         </div>
         <div>{result}</div>
-        <div>Last login : {last_login}</div>
-        <div>UID : {user_id}</div>
         <Footer />
       </div>
     </>

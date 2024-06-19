@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Space, Input, Button, TableProps } from "antd";
 import { FaCirclePlus, FaWeightScale } from "react-icons/fa6";
 import ModalTable from "./table.component"; // Make sure the path is correct
 import { DataType } from "../interface/datatype-weight.interface";
+import { blue } from "../interface/user.interface";
 
 interface DashboardActionCardProps {
   value: number;
@@ -16,14 +17,14 @@ interface DashboardActionCardProps {
   showModal: () => void;
   columns: TableProps<DataType>["columns"];
   dataSource: DataType[];
+  height: string;
+  setHeight: (value: string) => void;
 }
-
-const blue = "#2E5FD4";
 
 const DashboardActionCard: React.FC<DashboardActionCardProps> = ({
   value,
-  message,
   isModalOpen,
+  message,
   handleOk,
   handleCancel,
   inputValue,
@@ -32,6 +33,8 @@ const DashboardActionCard: React.FC<DashboardActionCardProps> = ({
   showModal,
   columns,
   dataSource,
+  height,
+  setHeight,
 }) => {
   return (
     <div className="row d-flex justify-content-center">
@@ -74,33 +77,57 @@ const DashboardActionCard: React.FC<DashboardActionCardProps> = ({
         </div>
       </div>
       <Modal
-        title="Weight"
+        title="Weight & Heigth Table"
         centered
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
         width={1000}
         maskClosable={false}
+        closable={false}
         cancelButtonProps={{ style: { display: "none" } }}
       >
-        <Space.Compact style={{ width: "100%" }}>
-          <Input
-            placeholder="Input weight"
-            value={inputValue}
-            onChange={(e) => {
-              setInputValue(e.target.value);
-            }}
-          />
-          <Button onClick={handleAddTable} type="primary">
-            +
+        <section className="mb-3">
+          <Space.Compact style={{ width: "100%" }}>
+            <Input
+              type="number"
+              placeholder="Input height"
+              value={height}
+              onChange={(e) => {
+                setHeight(e.target.value);
+              }}
+              addonAfter="cm"
+            />
+            {/* <Button onClick={handleAddTable} type="primary">
+              Set
+            </Button> */}
+          </Space.Compact>
+        </section>
+        <section>
+          <Space.Compact style={{ width: "100%" }} className="mb-3">
+            <Input
+              type="number"
+              placeholder="Input weight"
+              value={inputValue}
+              onChange={(e) => {
+                setInputValue(e.target.value);
+              }}
+              addonAfter="kg"
+            />
+            {/* <Button onClick={handleAddTable} type="primary">
+              +
+            </Button> */}
+          </Space.Compact>
+          <Button onClick={handleAddTable} type="primary" className="mb-2">
+            Add
           </Button>
-        </Space.Compact>
-        <div className="rounded py-2">
-          <ModalTable
-            columns={columns as DataType[]}
-            data={dataSource as any}
-          />
-        </div>
+          <div className="rounded py-2">
+            <ModalTable
+              columns={columns as DataType[]}
+              data={dataSource as any}
+            />
+          </div>
+        </section>
       </Modal>
     </div>
   );

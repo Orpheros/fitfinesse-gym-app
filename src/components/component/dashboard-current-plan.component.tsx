@@ -1,13 +1,36 @@
 interface Props {
   backgroundPath?: string;
   label?: string;
+  onClick?: () => void;
 }
 
-const CurrentPlanComponent: React.FC<Props> = ({ backgroundPath, label }) => {
+const CurrentPlanComponent: React.FC<Props> = ({
+  backgroundPath,
+  label,
+  onClick,
+}) => {
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  const today = new Date().getDay();
+  const currentDay = days[today];
+
+  const isCurrentDay = label?.toLowerCase() === currentDay.toLowerCase();
+
   return (
     <div
+      // className={`d-flex w-100 ${isCurrentDay ? "" : "bg-opacity-10"}`}
       className="d-flex w-100"
+      onClick={onClick}
       style={{
+        opacity: isCurrentDay ? 1 : 0.5,
+        pointerEvents: isCurrentDay ? "auto" : "none",
         filter: "drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.25))",
       }}
     >
@@ -27,7 +50,6 @@ const CurrentPlanComponent: React.FC<Props> = ({ backgroundPath, label }) => {
           style={{
             paddingBottom: "18px",
             paddingTop: "18px",
-            textAlign: "center",
             color: "white",
             fontWeight: "bold",
             fontSize: "45px",

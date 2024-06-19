@@ -1,0 +1,9 @@
+.chart-responsive {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .chart-responsive {
+    width: 380px;
+  }
+}

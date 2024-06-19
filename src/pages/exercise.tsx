@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 const ExercisePage = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("Exercise");
-
   const handleClick = (tab: React.SetStateAction<string>) => {
     setActiveTab(tab);
   };
@@ -51,10 +50,6 @@ const ExercisePage = () => {
             style={{
               marginBottom: "5rem",
             }}
-            // style={{
-            //   maxHeight: "100vh",
-            //   overflow: "auto",
-            // }}
           >
             {/* Exercise Tab */}
             {activeTab === "Exercise" && (
@@ -71,28 +66,33 @@ const ExercisePage = () => {
               >
                 {/* Card Exercise */}
                 <ExerciseCardComponent
-                  onClick={() => handleNavigate("/exercise/list/back")}
+                  onClick={() => handleNavigate("/exercise/list/chest")}
                   label="Chest"
                   backgroundPath="src/assets/img/image3.png"
-                  i1
+                  // i1
                 />
                 <ExerciseCardComponent
+                  onClick={() => handleNavigate("/exercise/list/leg")}
                   label="Leg"
                   backgroundPath="src/assets/img/image4.jpg"
                 />
                 <ExerciseCardComponent
+                  onClick={() => handleNavigate("/exercise/list/back")}
                   label="Back"
                   backgroundPath="src/assets/img/image5.jpg"
                 />
                 <ExerciseCardComponent
+                  onClick={() => handleNavigate("/exercise/list/shoulder")}
                   label="Shoulder"
                   backgroundPath="src/assets/img/image6.jpg"
                 />
                 <ExerciseCardComponent
+                  onClick={() => handleNavigate("/exercise/list/upper_arm")}
                   label="Arm"
                   backgroundPath="src/assets/img/image7.png"
                 />
                 <ExerciseCardComponent
+                  onClick={() => handleNavigate("/exercise/list/cardio")}
                   label="Cardio"
                   backgroundPath="src/assets/img/image8.png"
                 />
@@ -108,12 +108,53 @@ const ExercisePage = () => {
                 {/* Card Exercise */}
                 <div className="w-100 d-flex flex-wrap gap-3">
                   <CurrentPlanComponent
+                    onClick={() =>
+                      handleNavigate("/exercise/list/daily_monday")
+                    }
                     backgroundPath="src/assets/img/image1.png"
                     label="MONDAY"
                   />
                   <CurrentPlanComponent
+                    onClick={() =>
+                      handleNavigate("/exercise/list/daily_tuesday")
+                    }
                     backgroundPath="src/assets/img/image1.png"
                     label="TUESDAY"
+                  />
+                  <CurrentPlanComponent
+                    onClick={() =>
+                      handleNavigate("/exercise/list/daily_wednesday")
+                    }
+                    backgroundPath="src/assets/img/image1.png"
+                    label="WEDNESDAY"
+                  />
+                  <CurrentPlanComponent
+                    onClick={() =>
+                      handleNavigate("/exercise/list/daily_thursday")
+                    }
+                    backgroundPath="src/assets/img/image1.png"
+                    label="THURSDAY"
+                  />
+                  <CurrentPlanComponent
+                    onClick={() =>
+                      handleNavigate("/exercise/list/daily_friday")
+                    }
+                    backgroundPath="src/assets/img/image1.png"
+                    label="FRIDAY"
+                  />
+                  <CurrentPlanComponent
+                    onClick={() =>
+                      handleNavigate("/exercise/list/daily_saturday")
+                    }
+                    backgroundPath="src/assets/img/image1.png"
+                    label="SATURDAY"
+                  />
+                  <CurrentPlanComponent
+                    onClick={() =>
+                      handleNavigate("/exercise/list/daily_sunday")
+                    }
+                    backgroundPath="src/assets/img/image1.png"
+                    label="SUNDAY"
                   />
                 </div>
               </div>

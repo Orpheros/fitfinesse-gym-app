@@ -8,7 +8,12 @@ const ModalTable: React.FC<{
 }> = ({ columns, data }) => {
   return (
     <>
-      <Table columns={columns} dataSource={data} pagination={{ pageSize: 3 }} />
+      <Table
+        columns={columns}
+        dataSource={data}
+        pagination={{ pageSize: 3 }}
+        className="border rounded"
+      />
     </>
   );
 };

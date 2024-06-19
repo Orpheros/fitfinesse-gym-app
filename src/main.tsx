@@ -12,6 +12,8 @@ import ExercisePage from "./pages/exercise.tsx";
 import LoyaltyPage from "./pages/loyalty.tsx";
 import ExerciseListPage from "./pages/exercise-list.tsx";
 import ErrorPage from "./components/layout/error.tsx";
+import CommunityPage from "./pages/community.tsx";
+import ChatPage from "./pages/chat.tsx";
 
 declare global {
   interface Window {
@@ -48,6 +50,13 @@ const router = createHashRouter([
   {
     path: "/loyalty",
     element: <LoyaltyPage />,
+  },
+  {
+    path: "/community",
+    children: [
+      { path: "", element: <CommunityPage /> },
+      { path: ":id", element: <ChatPage /> },
+    ],
   },
   {
     path: "/account",

@@ -4,9 +4,8 @@ import { Button, Modal, QRCode } from "antd";
 import { useState } from "react";
 import { Input } from "antd";
 import { useAddGym } from "../hooks/gyms/useAddGyms";
-import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../components/config/firebase-config";
-import { set } from "firebase/database";
 import Swal from "sweetalert2";
 import { createQuery } from "../helper/createQuery.helper";
 
@@ -14,16 +13,14 @@ const Account = () => {
   const { TextArea } = Input;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpenGym, setIsModalOpenGym] = useState(false);
-  const [textAreaValue, setTextAreaValue] = useState("");
   const [gymForm, setGymForm] = useState({
     gym_id: 0,
     gym_name: null,
     loyalty_point: null,
   });
   const [formData, setFormData] = useState({
-    gym_id: 1,
-    gym_name: "FTL Gym",
-    loyalty_point: 1,
+    gym_id: 2,
+    gym_name: "Fithub",
   });
 
   const handleTextAreaChange = (event: string) => {
