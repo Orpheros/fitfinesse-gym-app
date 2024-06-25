@@ -125,7 +125,12 @@ const LoyaltyPage = () => {
             }}
           />
         </div>
-        <div className="container-fluid d-flex gap-3 py-2">
+        <div
+          className="container-fluid d-flex gap-3 py-2"
+          style={{
+            marginBottom: "5rem",
+          }}
+        >
           {/* <div>{result}</div> */}
           <Button
             type="primary"

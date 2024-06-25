@@ -170,7 +170,12 @@ const Account = () => {
 
   return (
     <Layout>
-      <div className="container-fluid d-flex flex-column gap-3 py-2 px-4">
+      <div
+        className="container-fluid d-flex flex-column gap-3 py-2 px-4"
+        style={{
+          marginBottom: "5rem",
+        }}
+      >
         <div
           className="d-flex justify-content-center align-items-center w-100"
           style={{ height: "25vh" }}

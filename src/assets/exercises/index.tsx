@@ -8,6 +8,30 @@
 // 7:"upper arms"
 // 8:"upper legs"
 // 9:"waist"
+
+import { options } from "../../environment";
+
+//target list
+// 0:"abductors"
+// 1:"abs"
+// 2:"adductors"
+// 3:"biceps"
+// 4:"calves"
+// 5:"cardiovascular system"
+// 6:"delts"
+// 7:"forearms"
+// 8:"glutes"
+// 9:"hamstrings"
+// 10:"lats"
+// 11:"levator scapulae"
+// 12:"pectorals"
+// 13:"quads"
+// 14:"serratus anterior"
+// 15:"spine"
+// 16:"traps"
+// 17:"triceps"
+// 18:"upper back"
+
 export const exercises: any = {
   back: [
     {
@@ -1358,6 +1382,54 @@ export function populateDailyWorkout(
       return payload;
     default:
       console.log("default");
+  }
+}
+
+export async function populateDailyWorkoutApi(dayOfWeek: number) {
+  const fetchExercise = async (target: string) => {
+    try {
+      const url = `https://exercisedb.p.rapidapi.com/exercises/target/${target}?limit=10&offset=0`;
+      const response = await fetch(url, options);
+      const result = await response.json();
+      return result; // Ensure result is returned here
+    } catch (error) {
+      console.error(error);
+      throw error; // Throw the error to propagate it upwards
+    }
+  };
+
+  switch (dayOfWeek) {
+    case 0: // Sunday
+      console.log("sunday");
+      return true;
+    case 1: // Monday
+      console.log("monday");
+      return true;
+    case 2: // Tuesday
+      console.log("tuesday");
+      try {
+        const result = await fetchExercise("hamstrings");
+        return result; // Return the result from fetchExercise
+      } catch (error) {
+        console.error("Error fetching exercises:", error);
+        throw error; // Rethrow the error to propagate it upwards
+      }
+    case 3: // Wednesday
+      console.log("wednesday");
+      return true;
+    case 4: // Thursday
+      console.log("thursday");
+      console.log("true");
+      return true;
+    case 5: // Friday
+      console.log("friday");
+      return true;
+    case 6: // Saturday
+      console.log("saturday");
+      return true;
+    default:
+      console.log("default");
+      return false;
   }
 }
 

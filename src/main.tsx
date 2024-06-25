@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import { RouterProvider, createHashRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Login from "./pages/login.tsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Account from "./pages/account.tsx";
@@ -20,7 +20,7 @@ declare global {
   }
 }
 
-const router = createHashRouter([
+const router = createBrowserRouter([
   {
     path: "/",
     element: <Login />,

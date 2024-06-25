@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import Layout from "../components/layout/layout";
-import { exercises, populateDailyWorkout } from "../assets/exercises/index";
+import {
+  exercises,
+  populateDailyWorkout,
+  // populateDailyWorkoutApi,
+} from "../assets/exercises/index";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, Drawer, Empty, Input, Modal, Space } from "antd";
+import { Button, Drawer, Input, Modal, Space } from "antd";
 import React from "react";
 import { capitalizeWords, formatTime } from "../helper/formating-helper";
 import {
@@ -17,6 +21,7 @@ import { useGetGymExercises } from "../hooks/gyms/useGetGymsExercises";
 import { Time } from "../components/interface/time.interface";
 import Swal from "sweetalert2";
 import LoadingPage from "../components/layout/loading";
+// import { options } from "../environment";
 
 interface ExerciseCategory {
   [key: string]: {
@@ -42,6 +47,7 @@ const ExerciseListPage = () => {
   const [open, setOpen] = useState(false);
   const [exercise, setExercise] = useState<any>(null);
   const categoryExercises = (exercises as ExerciseCategory)[category || ""];
+
   const [collapsedSections, setCollapsedSections] = useState<
     Record<string, boolean>
   >({});
@@ -60,12 +66,54 @@ const ExerciseListPage = () => {
   const [repsArr, setRepsArr] = useState<any>([]);
   const { loading, userGymsByDate } = useGetGymExercises();
   const currDate = new Date();
-  const navigate = useNavigate();
+
+  // const [exerciseList, setExerciseList] = useState<any>([]);
+  // const isMounted = useRef(false);
+  // const getList = async () => {
+  //   let target = category;
+  //   if (category == "leg") {
+  //     target = "lower legs";
+  //   }
+  //   try {
+  //     const url = `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${target}?limit=100&offset=0`;
+  //     const response = await fetch(url, options);
+  //     const result = await response.json();
+  //     setLoadingExercise(false);
+  //     return result;
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+  // const getDailyList = async () => {
+  //   try {
+  //     const res = await populateDailyWorkoutApi(currDate.getDay());
+  //     console.log("res", res);
+  //     return res;
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+  // useEffect(() => {
+  //   if (isMounted.current) return;
+  //   isMounted.current = true;
+
+  //   const fetchData = async () => {
+  //     setLoadingExercise(true);
+  //     if (category?.includes("daily")) {
+  //       const res = await getDailyList();
+  //       setExerciseList(res);
+  //       setLoadingExercise(false);
+  //     } else {
+  //       const res = await getList();
+  //       setExerciseList(res);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
   useEffect(() => {
     if (userGymsByDate.length == 0) return;
     const data = JSON.parse(userGymsByDate[0].user_exercise);
-    console.log("user gym", userGymsByDate);
     setExerciseTimes(data);
   }, [userGymsByDate]);
 
@@ -86,7 +134,9 @@ const ExerciseListPage = () => {
       setLoadingExercise(false);
     };
 
-    fetchDailyWorkout();
+    if (category?.includes("daily")) {
+      fetchDailyWorkout();
+    }
   }, []);
 
   const showDrawer = (category: any) => {
@@ -189,28 +239,29 @@ const ExerciseListPage = () => {
     }));
   };
 
-  if (!categoryExercises) {
-    return (
-      <Layout>
-        <div style={{ marginBottom: "5rem" }}>
-          {/* <div>Category not found</div> */}
-          <Empty
-            imageStyle={{ height: 300 }}
-            style={{ fontSize: "1.8rem" }}
-            description={<span>Category not Found</span>}
-          />
-          <Button
-            type="primary"
-            size="large"
-            block
-            onClick={() => navigate("/exercise")}
-          >
-            Back
-          </Button>
-        </div>
-      </Layout>
-    );
-  }
+  // if (!categoryExercises) {
+  //   return (
+  //     <Layout>
+  //       <div style={{ marginBottom: "5rem" }}>
+  //         {/* <div>Category not found</div> */}
+  //         <Empty
+  //           imageStyle={{ height: 300 }}
+  //           style={{ fontSize: "1.8rem" }}
+  //           description={<span>Category not Found</span>}
+  //         />
+  //         <Button
+  //           type="primary"
+  //           size="large"
+  //           block
+  //           onClick={() => navigate("/exercise")}
+  //         >
+  //           Back
+  //         </Button>
+  //       </div>
+  //     </Layout>
+  //   );
+  // }
+
   const groupExercisesByEquipment = (exercises: any) => {
     return exercises.reduce((acc: any, exercise: any) => {
       const equipment = exercise.equipment || "Other";
@@ -223,7 +274,7 @@ const ExerciseListPage = () => {
   };
   const groupedExercises = groupExercisesByEquipment(categoryExercises || []);
 
-  if (loading || loadingExercise) {
+  if (loading) {
     return <LoadingPage />;
   }
 

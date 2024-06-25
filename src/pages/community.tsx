@@ -75,7 +75,7 @@ const CommunityPage = () => {
         <div className="d-flex justify-content-center">
           <div
             className="containter-fluid mt-4 justify-content-center"
-            style={{ width: "90%" }}
+            style={{ width: "90%", marginBottom: "5rem" }}
           >
             <section className="mb-3">
               <h6 className="mb-2">News</h6>
