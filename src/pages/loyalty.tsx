@@ -1,9 +1,8 @@
 // import Reader from "react-qr-scanner";
 import { useEffect, useState } from "react";
-import { Button, Modal, Steps } from "antd";
+import { Button, Modal } from "antd";
 import Footer from "../components/layout/footer";
 import { QrScanner } from "@yudiel/react-qr-scanner";
-import { useGetUser } from "../hooks/user/useGetUser";
 import { useGetGyms } from "../hooks/gyms/useGetGyms";
 import LoadingPage from "../components/layout/loading";
 import { useGetGymExercises } from "../hooks/gyms/useGetGymsExercises";
@@ -16,9 +15,9 @@ const LoyaltyPage = () => {
   const [result, setResult] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dailyScan, setDailyScan] = useState(false);
-  const [loyaltyProgress, setLoyaltyProgress] = useState([]);
-  const [currentLoyaltyProgress, setCurrentLoyaltyProgress] = useState(0);
-  const { loading, userGyms } = useGetGymExercises();
+  // const [loyaltyProgress, setLoyaltyProgress] = useState([]);
+  // const [currentLoyaltyProgress, setCurrentLoyaltyProgress] = useState(0);
+  const { loading } = useGetGymExercises();
   const { gyms } = useGetGyms();
   const { userData } = useGetUserInfo();
   const [userGym, setUserGym] = useState<any>({});
@@ -80,7 +79,7 @@ const LoyaltyPage = () => {
             timerProgressBar: true,
             showConfirmButton: false,
           });
-          setCurrentLoyaltyProgress((prevProgress) => prevProgress + 1);
+          // setCurrentLoyaltyProgress((prevProgress) => prevProgress + 1);
         }
         setDailyScan(true);
       } catch (error) {

@@ -2,8 +2,6 @@
 import React from "react";
 import { Steps } from "antd";
 
-const { Step } = Steps;
-
 export const DynamicSteps: React.FC<any> = ({
   userData,
   maxSteps,

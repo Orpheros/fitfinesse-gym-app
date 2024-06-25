@@ -1,5 +1,4 @@
 import Layout from "../components/layout/layout";
-import Chart from "react-apexcharts";
 import { useGetUser } from "../hooks/user/useGetUser";
 import { useEffect, useState } from "react";
 import { Button, Modal, Select, Space } from "antd";
@@ -174,39 +173,39 @@ const DashboardPage = () => {
     navigate(`/daily/list/daily_${today}`);
   };
 
-  const state = {
-    options: {
-      colors: [blue],
-      stroke: {
-        // curve: "smooth",
-        // lineCap: "round",
-      },
-      grid: {
-        show: true,
-        padding: { left: -25, right: -25, top: -25, bottom: -25 },
-      },
-      plotOptions: {
-        radialBar: {
-          hollow: {
-            size: "45%",
-          },
-          dataLabels: {
-            name: {
-              show: true,
-              fontSize: "12px",
-            },
-            value: {
-              show: true,
-              fontSize: "15px",
-              offsetY: 0,
-            },
-          },
-        },
-      },
-      labels: ["Progress"],
-    },
-    series: [24],
-  };
+  // const state = {
+  //   options: {
+  //     colors: [blue],
+  //     stroke: {
+  //       // curve: "smooth",
+  //       // lineCap: "round",
+  //     },
+  //     grid: {
+  //       show: true,
+  //       padding: { left: -25, right: -25, top: -25, bottom: -25 },
+  //     },
+  //     plotOptions: {
+  //       radialBar: {
+  //         hollow: {
+  //           size: "45%",
+  //         },
+  //         dataLabels: {
+  //           name: {
+  //             show: true,
+  //             fontSize: "12px",
+  //           },
+  //           value: {
+  //             show: true,
+  //             fontSize: "15px",
+  //             offsetY: 0,
+  //           },
+  //         },
+  //       },
+  //     },
+  //     labels: ["Progress"],
+  //   },
+  //   series: [24],
+  // };
 
   const showModal = () => {
     setIsModalOpen(true);

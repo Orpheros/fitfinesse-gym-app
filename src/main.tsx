@@ -4,7 +4,6 @@ import "./index.css";
 import { RouterProvider, createHashRouter } from "react-router-dom";
 import Login from "./pages/login.tsx";
 import "bootstrap/dist/css/bootstrap.min.css";
-import ExpenseCreate from "./pages/expense-create.tsx";
 import Account from "./pages/account.tsx";
 import DashboardPage from "./pages/dashboard.tsx";
 import RegisterPage from "./pages/register.tsx";

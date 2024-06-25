@@ -10,7 +10,6 @@ import {
 } from "firebase/firestore";
 import { db } from "../../components/config/firebase-config";
 import { useGetUserInfo } from "../user/useGetUserInfo";
-import { useState } from "react";
 import { compareDates } from "../../helper/formating-helper";
 
 export const useAddGymExercises = () => {

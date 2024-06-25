@@ -14,9 +14,9 @@ import {
 import Stopwatch from "../components/component/stopwatch/stopwatch";
 import { useAddGymExercises } from "../hooks/gyms/useAddGymsExercises";
 import { useGetGymExercises } from "../hooks/gyms/useGetGymsExercises";
-import LoadingPage from "../components/layout/loading";
 import { Time } from "../components/interface/time.interface";
 import Swal from "sweetalert2";
+import LoadingPage from "../components/layout/loading";
 
 interface ExerciseCategory {
   [key: string]: {
@@ -223,9 +223,9 @@ const ExerciseListPage = () => {
   };
   const groupedExercises = groupExercisesByEquipment(categoryExercises || []);
 
-  // if (loading || loadingExercise) {
-  //   return <LoadingPage />;
-  // }
+  if (loading || loadingExercise) {
+    return <LoadingPage />;
+  }
 
   return (
     <Layout>

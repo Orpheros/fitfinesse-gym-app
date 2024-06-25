@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
 import ChatBox from "../components/component/Message/Chatbox.component";
 import { IoMdArrowBack } from "react-icons/io";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ChatPage = () => {
   const navigate = useNavigate();

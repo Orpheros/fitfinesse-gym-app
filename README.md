@@ -1,8 +1,8 @@
 # FitFinesse
 
 <!-- Checkout hosting here :
-Project Console: https://console.firebase.google.com/project/expense-tracker-7ae76/overview
-Hosting URL: https://expense-tracker-7ae76.web.app -->
+Project Console: https://console.firebase.google.com/project/fit-finesse/overview
+Hosting URL: https://fit-finesse.web.app -->
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

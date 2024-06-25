@@ -2,7 +2,6 @@ import {
   collection,
   query,
   where,
-  getDocs,
   onSnapshot,
   orderBy,
 } from "firebase/firestore";
@@ -11,27 +10,26 @@ import { useEffect, useState } from "react";
 import { useGetUserInfo } from "../user/useGetUserInfo";
 import { compareDates } from "../../helper/formating-helper";
 
-interface Gym {
-  id: string;
-  gym_id: string;
-  gym_name: string;
-  loyalty_point: number;
-  user_id: string;
-  exercises: Exercise[];
-}
+// interface Gym {
+//   id: string;
+//   gym_id: string;
+//   gym_name: string;
+//   loyalty_point: number;
+//   user_id: string;
+//   exercises: Exercise[];
+// }
 
-interface Exercise {
-  exercise_id: string;
-  name: string;
-  time: {
-    hours: number;
-    minutes: number;
-    seconds: number;
-  };
-}
+// interface Exercise {
+//   exercise_id: string;
+//   name: string;
+//   time: {
+//     hours: number;
+//     minutes: number;
+//     seconds: number;
+//   };
+// }
 
 export const useGetGymExercises = () => {
-  const [gyms, setGyms] = useState<Gym[]>([]);
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState(true);
   const { userData } = useGetUserInfo();
@@ -213,7 +211,6 @@ export const useGetGymExercises = () => {
   }, [userData]);
 
   return {
-    gyms,
     error,
     loading,
     userGyms,

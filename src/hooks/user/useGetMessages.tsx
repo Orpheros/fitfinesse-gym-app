@@ -5,8 +5,8 @@ import {
   limit,
   onSnapshot,
 } from "firebase/firestore";
-import { db } from "../components/config/firebase-config";
 import { useState, useRef, useEffect } from "react";
+import { db } from "../../components/config/firebase-config";
 
 export const useGetMessages = () => {
   const [messages, setMessages] = useState([]);

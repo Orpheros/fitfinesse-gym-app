@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Layout from "../components/layout/layout";
 import { useGetGyms } from "../hooks/gyms/useGetGyms";
 import { useNavigate } from "react-router-dom";
-import LoadingPage from "../components/layout/loading";
 import { IoIosArrowForward } from "react-icons/io";
 import { blue } from "../components/interface/user.interface";
 import { GrGroup } from "react-icons/gr";
@@ -54,7 +53,7 @@ const CommunityPage = () => {
     setOpen(false);
   };
 
-  const { gymsList, loading } = useGetGyms();
+  const { gymsList } = useGetGyms();
 
   const handleNavigate = (gymId: string) => {
     navigate(`/community/${gymId}`);

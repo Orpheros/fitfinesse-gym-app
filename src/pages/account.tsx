@@ -14,7 +14,6 @@ import { useGetGyms } from "../hooks/gyms/useGetGyms";
 import LoadingPage from "../components/layout/loading";
 
 const Account = () => {
-  const { TextArea } = Input;
   const { userData, loading } = useGetUserInfo();
   const { gyms } = useGetGyms();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,15 +24,19 @@ const Account = () => {
     gym_name: null,
     loyalty_point: null,
   });
-  const [formData, setFormData] = useState({
+  // const [formData, setFormData] = useState({
+  //   gym_id: 2,
+  //   gym_name: "Fithub",
+  // });
+  const formData = {
     gym_id: 2,
     gym_name: "Fithub",
-  });
-
-  const handleTextAreaChange = (event: string) => {
-    // setTextAreaValue(event);
-    setFormData({ ...formData, ...JSON.parse(event) });
   };
+
+  // const handleTextAreaChange = (event: string) => {
+  //   // setTextAreaValue(event);
+  //   setFormData({ ...formData, ...JSON.parse(event) });
+  // };
   const navigate = useNavigate();
 
   const handleLogout = () => {

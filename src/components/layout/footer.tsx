@@ -5,7 +5,6 @@ import { UserOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { IoBarbellOutline, IoChatbubblesOutline } from "react-icons/io5";
 import { PiQrCode } from "react-icons/pi";
-import { TbReportAnalytics } from "react-icons/tb";
 import { BiHomeAlt } from "react-icons/bi";
 import { blue } from "../interface/user.interface";
 const Footer = () => {

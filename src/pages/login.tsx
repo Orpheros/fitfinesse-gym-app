@@ -1,5 +1,5 @@
 import { Button } from "antd";
-import { auth, db, provider } from "../components/config/firebase-config";
+import { auth, provider } from "../components/config/firebase-config";
 import {
   getRedirectResult,
   signInWithPopup,
@@ -8,7 +8,7 @@ import {
 import { useNavigate, Navigate } from "react-router-dom";
 import { GoogleOutlined } from "@ant-design/icons";
 import { LoginBackground } from "../assets/background";
-import { useCheckUser, useGetUser } from "../hooks/user/useGetUser";
+import { useCheckUser } from "../hooks/user/useGetUser";
 import styled from "styled-components";
 import { useEffect } from "react";
 

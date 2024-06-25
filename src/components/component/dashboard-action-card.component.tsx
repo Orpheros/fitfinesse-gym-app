@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Modal, Space, Input, Button, TableProps } from "antd";
 import { FaCirclePlus, FaWeightScale } from "react-icons/fa6";
 import ModalTable from "./table.component"; // Make sure the path is correct

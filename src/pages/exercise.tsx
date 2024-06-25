@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import LoadingPage from "../components/layout/loading";
 import { useGetExpense } from "../hooks/useGetExpense";
 import Layout from "../components/layout/layout";
@@ -19,9 +19,9 @@ const ExercisePage = () => {
   };
   const { loading } = useGetExpense();
 
-  // if (loading) {
-  //   return <LoadingPage />;
-  // }
+  if (loading) {
+    return <LoadingPage />;
+  }
 
   return (
     <>

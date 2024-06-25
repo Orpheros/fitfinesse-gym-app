@@ -1,6 +1,5 @@
-import { doc, getDoc, getDocs, query, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../components/config/firebase-config";
-import { createQuery } from "../../helper/createQuery.helper";
 import Swal from "sweetalert2";
 
 export const handleScan = async (

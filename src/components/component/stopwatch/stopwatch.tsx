@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import "./styles.css";
-import { Button } from "antd";
 
 interface Time {
   seconds: number;
@@ -19,7 +18,6 @@ const Stopwatch: React.FC<StopwatchProps> = ({
   currentTime,
   setCurrentTime,
   currentState,
-  setCurrentState,
 }) => {
   const intervalRef = React.useRef<NodeJS.Timeout | undefined>();
 
