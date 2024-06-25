@@ -55,7 +55,7 @@ export const useGetGyms = () => {
     );
 
     return () => unsubscribe();
-  }, [userData, gyms]);
+  }, [userData]);
 
   useEffect(() => {
     if (!userData.gym_id) return;
@@ -94,7 +94,7 @@ export const useGetGyms = () => {
     );
 
     return () => unsubscribe();
-  }, [userData, gyms]);
+  }, [userData]);
 
   return { gyms, error, loading, gymsList };
 };

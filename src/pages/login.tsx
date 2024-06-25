@@ -84,8 +84,33 @@ const Login = () => {
   return (
     <>
       <LoginBackground />
-      <div className="d-flex justify-content-center align-items-center min-vh-100">
+      <div className="d-flex justify-content-center flex-column align-items-center min-vh-100">
+        <div className="p-5">
+          <img
+            src="src/assets/img/logo.png"
+            alt=""
+            className="logo-image"
+            style={{
+              maxWidth: "100%",
+              height: "auto",
+              display: "block",
+              margin: "0 auto",
+              borderRadius: "12px",
+            }}
+          />
+        </div>
         <div className="text-center">
+          {/* <img
+            src="src/assets/img/logo.png"
+            alt=""
+            className="logo-image"
+            style={{
+              maxWidth: "100%",
+              height: "auto",
+              display: "block",
+              margin: "0 auto",
+            }}
+          /> */}
           <LoginCard>
             <p className="">Sign in with google to continue</p>
             <Button

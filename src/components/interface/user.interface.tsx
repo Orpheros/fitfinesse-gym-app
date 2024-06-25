@@ -8,6 +8,8 @@ export interface User {
   user_id: string;
   weight: string;
   height: number;
+  is_admin: number;
 }
 
 export const blue = "#2E5FD4";
+export const primary_blue = "#1677ff";

@@ -5,14 +5,21 @@ import { useState } from "react";
 import { Input } from "antd";
 import { useAddGym } from "../hooks/gyms/useAddGyms";
 import { addDoc, collection, getDocs } from "firebase/firestore";
-import { db } from "../components/config/firebase-config";
+import { auth, db } from "../components/config/firebase-config";
 import Swal from "sweetalert2";
 import { createQuery } from "../helper/createQuery.helper";
+import { useGetUserInfo } from "../hooks/user/useGetUserInfo";
+import moment from "moment";
+import { useGetGyms } from "../hooks/gyms/useGetGyms";
+import LoadingPage from "../components/layout/loading";
 
 const Account = () => {
   const { TextArea } = Input;
+  const { userData, loading } = useGetUserInfo();
+  const { gyms } = useGetGyms();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpenGym, setIsModalOpenGym] = useState(false);
+  const photo = auth.currentUser?.photoURL;
   const [gymForm, setGymForm] = useState({
     gym_id: 0,
     gym_name: null,
@@ -93,36 +100,18 @@ const Account = () => {
     });
   };
 
-  // const handleAddGym = async (event: any) => {
-  //   event.preventDefault();
+  // const { addExercise } = useAddExercises();
 
-  //   let gym_id = gymForm.gym_name;
-  //   let gymExists = true;
-  //   let docRef;
-
-  //   while (gymExists) {
-  //     docRef = query(collection(db, "gyms"), where("gym_id", "==", gym_id));
-  //     const querySnapshot = await getDocs(docRef);
-
-  //     if (querySnapshot.empty) {
-  //       gymExists = false;
-  //     } else {
-  //       gym_id = incrementGymId(gym_id);
+  // const addExerciseList = (event: any) => {
+  //   const uploadExercises = async () => {
+  //     for (const category in exercises) {
+  //       for (const exercise of exercises[category]) {
+  //         await addExercise({ category, exercise });
+  //       }
   //     }
-  //   }
+  //   };
 
-  //   await addDoc(collection(db, "gyms"), {
-  //     gym_id: gym_id,
-  //     gym_name: gymForm.gym_name,
-  //     loyalty_point: gymForm.loyalty_point,
-  //   });
-  // };
-
-  // const incrementGymId = (gym_id: any) => {
-  //   let id_number = parseInt(gym_id.match(/\d+$/)[0], 10);
-  //   let id_string = gym_id.replace(/\d+$/, "");
-  //   id_number++;
-  //   return id_string + id_number;
+  //   uploadExercises();
   // };
 
   const handleSubmit = async (event: any) => {
@@ -172,29 +161,93 @@ const Account = () => {
     });
   };
 
+  if (loading) {
+    return <LoadingPage></LoadingPage>;
+  }
+
   return (
     <Layout>
-      <div className="container-fluid d-flex flex-column gap-3 py-2">
+      <div className="container-fluid d-flex flex-column gap-3 py-2 px-4">
+        <div
+          className="d-flex justify-content-center align-items-center w-100"
+          style={{ height: "25vh" }}
+        >
+          <div
+            style={{
+              borderRadius: "50%",
+              overflow: "hidden",
+              width: "12rem",
+              height: "12rem",
+            }}
+          >
+            <img
+              src={photo || ""}
+              alt=""
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-12">
+            <h6 className="">Name : </h6>
+            <p className="m-0">{userData.name ? userData.name : "-"}</p>
+            <hr style={{ margin: "0.7rem 0" }} />
+          </div>
+          <div className="col-12">
+            <h6 className="">Current gym : </h6>
+            <p className="m-0">{gyms[0]?.gym_name ? gyms[0]?.gym_name : "-"}</p>
+            <hr style={{ margin: "0.7rem 0" }} />
+          </div>
+          <div className="col-12">
+            <h6 className="">Last QR scan : </h6>
+            <p className="m-0">
+              {userData.last_scan
+                ? moment(userData.last_scan).format("dddd, D MMMM YYYY")
+                : "-"}
+            </p>
+            <hr style={{ margin: "0.7rem 0" }} />
+          </div>
+        </div>
         {/* <TextArea
-          rows={4}
-          value={textAreaValue}
-          onChange={(e) => handleTextAreaChange(e.target.value)}
-        /> */}
-        <TextArea
           rows={4}
           readOnly
           value={JSON.stringify(formData, null, 2)}
           onChange={(e) => handleTextAreaChange(e.target.value)}
-        />
+        /> */}
         {/* <div>{result}</div> */}
-        <Button
+        {/* <Button
           type="primary"
           block
           style={{ height: "3rem" }}
-          onClick={showModal}
+          onClick={addExerciseList}
         >
-          Generate QR
-        </Button>
+          Add Exercise List
+        </Button> */}
+        {userData.is_admin && (
+          <>
+            <Button
+              type="primary"
+              block
+              style={{ height: "3rem" }}
+              onClick={showModal}
+            >
+              Generate QR
+            </Button>
+            <Button
+              type="primary"
+              block
+              style={{ height: "3rem" }}
+              onClick={showModalGym}
+            >
+              Generate Gym
+            </Button>
+          </>
+        )}
+
         <Modal
           title="Generate QR"
           centered
@@ -218,14 +271,6 @@ const Account = () => {
             </div>
           </div>
         </Modal>
-        <Button
-          type="primary"
-          block
-          style={{ height: "3rem" }}
-          onClick={showModalGym}
-        >
-          Generate Gym
-        </Button>
         <Modal
           title="Generate QR"
           centered
@@ -258,10 +303,10 @@ const Account = () => {
             </Button>
           </form>
         </Modal>
+        <Button className="" onClick={handleLogout}>
+          Logout
+        </Button>
       </div>
-      <Button className="ms-lg-4 ms-3 me-lg-3 me-2" onClick={handleLogout}>
-        Logout
-      </Button>
     </Layout>
   );
 };

@@ -223,9 +223,9 @@ const ExerciseListPage = () => {
   };
   const groupedExercises = groupExercisesByEquipment(categoryExercises || []);
 
-  if (loading || loadingExercise) {
-    return <LoadingPage />;
-  }
+  // if (loading || loadingExercise) {
+  //   return <LoadingPage />;
+  // }
 
   return (
     <Layout>

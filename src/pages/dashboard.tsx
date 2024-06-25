@@ -17,10 +17,12 @@ import ReactApexChart from "react-apexcharts";
 import "../components/layout/chart.css";
 import LoadingPage from "../components/layout/loading";
 import { handleSetHeight } from "../hooks/user/useSetHeigth";
-import { blue } from "../components/interface/user.interface";
-import { auth } from "../components/config/firebase-config";
+import { blue, primary_blue } from "../components/interface/user.interface";
+import { useNavigate } from "react-router-dom";
+import { getDayName } from "../assets/exercises";
 
 const DashboardPage = () => {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpenGym, setIsModalOpenGym] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -37,7 +39,6 @@ const DashboardPage = () => {
   const date = new Date();
   const currDate = moment(date).format("dddd, D MMMM YYYY");
   const { name } = useGetUser();
-  const photo = auth.currentUser?.photoURL;
   const { gyms, gymsList } = useGetGyms();
   const { userData } = useGetUserInfo();
   const { userGymsListByGym } = useGetGymExercises();
@@ -165,6 +166,12 @@ const DashboardPage = () => {
     const userWeight = userData.weight ? JSON.parse(userData.weight) : null;
     const newData = userWeight.filter((el: any) => el.key !== key);
     handleSetWeight(userData.user_id, newData);
+  };
+
+  const handleNavigateDaily = () => {
+    const currDate = new Date();
+    const today = getDayName(currDate.getDay());
+    navigate(`/daily/list/daily_${today}`);
   };
 
   const state = {
@@ -318,35 +325,14 @@ const DashboardPage = () => {
                           </p>
                         </div>
                       </div>
-                      {/* <Chart
-                        options={{
-                          ...state.options,
-                          stroke: {
-                            ...state.options.stroke,
-                            lineCap: "round",
-                          },
-                        }}
-                        series={state.series}
-                        type="radialBar"
-                        width="120"
-                      /> */}
-                      <div
-                        style={{
-                          borderRadius: "50%",
-                          overflow: "hidden",
-                          width: "100px",
-                          height: "100px",
-                        }}
-                      >
-                        <img
-                          src={photo || ""}
-                          alt=""
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                          }}
-                        />
+                      <div>
+                        <Button
+                          style={{ backgroundColor: primary_blue }}
+                          className="h-100 text-white"
+                          onClick={handleNavigateDaily}
+                        >
+                          Daily<br></br> Exercise
+                        </Button>
                       </div>
                     </div>
                     {chartExercise.length > 0 && (

@@ -60,7 +60,8 @@ const CommunityPage = () => {
     navigate(`/community/${gymId}`);
   };
 
-  if (loading) return <LoadingPage />;
+  // if (loading) return <LoadingPage />;
+
   const contentStyle: React.CSSProperties = {
     height: "250px",
     color: "#fff",

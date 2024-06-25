@@ -3,7 +3,7 @@ import { Modal, Space, Input, Button, TableProps } from "antd";
 import { FaCirclePlus, FaWeightScale } from "react-icons/fa6";
 import ModalTable from "./table.component"; // Make sure the path is correct
 import { DataType } from "../interface/datatype-weight.interface";
-import { blue } from "../interface/user.interface";
+import { blue, primary_blue } from "../interface/user.interface";
 
 interface DashboardActionCardProps {
   value: number;
@@ -70,7 +70,7 @@ const DashboardActionCard: React.FC<DashboardActionCardProps> = ({
           <div>
             <FaCirclePlus
               size={35}
-              style={{ color: blue }}
+              style={{ color: primary_blue }}
               onClick={showModal}
             />
           </div>
