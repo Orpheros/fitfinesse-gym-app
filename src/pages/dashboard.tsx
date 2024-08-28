@@ -170,7 +170,7 @@ const DashboardPage = () => {
   const handleNavigateDaily = () => {
     const currDate = new Date();
     const today = getDayName(currDate.getDay());
-    navigate(`/daily/list/daily_${today}`);
+    navigate(`/exercise/list/daily_${today}`);
   };
 
   // const state = {

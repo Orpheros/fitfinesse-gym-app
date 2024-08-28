@@ -19,8 +19,9 @@ const Login = () => {
   const isLogined = localStorage.getItem("auth");
 
   useEffect(() => {
-    console.log("a", isLogined);
+    console.log("a1", isLogined);
     getRedirectResult(auth).then(async (result) => {
+      console.log("a2", result);
       if (result && result.user) {
         const userAuth = {
           user_id: result.user.uid,
@@ -29,7 +30,6 @@ const Login = () => {
           last_login: new Date().toISOString(),
           isAuth: true,
         };
-        // localStorage.setItem("auth", JSON.stringify(userAuth));
 
         // Call the function to save user data
         // saveUserDataToFirestore(userAuth);

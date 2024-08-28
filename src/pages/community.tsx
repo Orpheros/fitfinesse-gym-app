@@ -7,6 +7,9 @@ import { blue } from "../components/interface/user.interface";
 import { GrGroup } from "react-icons/gr";
 import { Carousel, CarouselProps, Drawer } from "antd";
 import styled from "styled-components";
+import image1 from "../assets/img/carousel/carousel1.png";
+import image2 from "../assets/img/carousel/carousel2.png";
+import image3 from "../assets/img/carousel/carousel3.png";
 
 const CarouselWrapper = styled(Carousel)<CarouselProps>`
   > .slick-dots li button {
@@ -81,25 +84,13 @@ const CommunityPage = () => {
               <h6 className="mb-2">News</h6>
               <CarouselWrapper autoplay className="border rounded">
                 <div>
-                  <img
-                    src="src/assets/img/carousel/carousel1.png"
-                    alt=""
-                    style={contentStyle}
-                  />
+                  <img src={image1} alt="" style={contentStyle} />
                 </div>
                 <div>
-                  <img
-                    src="src/assets/img/carousel/carousel2.png"
-                    alt=""
-                    style={contentStyle}
-                  />
+                  <img src={image2} alt="" style={contentStyle} />
                 </div>
                 <div>
-                  <img
-                    src="src/assets/img/carousel/carousel3.png"
-                    alt=""
-                    style={contentStyle}
-                  />
+                  <img src={image3} alt="" style={contentStyle} />
                 </div>
               </CarouselWrapper>
             </section>

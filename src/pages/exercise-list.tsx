@@ -1,11 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Layout from "../components/layout/layout";
-import {
-  exercises,
-  populateDailyWorkout,
-  // populateDailyWorkoutApi,
-} from "../assets/exercises/index";
-import { useNavigate, useParams } from "react-router-dom";
+import { populateDailyWorkoutApi } from "../assets/exercises/index";
+import { useParams } from "react-router-dom";
 import { Button, Drawer, Input, Modal, Space } from "antd";
 import React from "react";
 import { capitalizeWords, formatTime } from "../helper/formating-helper";
@@ -21,20 +17,21 @@ import { useGetGymExercises } from "../hooks/gyms/useGetGymsExercises";
 import { Time } from "../components/interface/time.interface";
 import Swal from "sweetalert2";
 import LoadingPage from "../components/layout/loading";
+import { options } from "../environment";
 // import { options } from "../environment";
 
-interface ExerciseCategory {
-  [key: string]: {
-    bodyPart: string;
-    equipment: string;
-    gifUrl: string;
-    id: string;
-    name: string;
-    target: string;
-    secondaryMuscles: string[];
-    instructions: string[];
-  }[];
-}
+// interface ExerciseCategory {
+//   [key: string]: {
+//     bodyPart: string;
+//     equipment: string;
+//     gifUrl: string;
+//     id: string;
+//     name: string;
+//     target: string;
+//     secondaryMuscles: string[];
+//     instructions: string[];
+//   }[];
+// }
 
 interface Reps {
   weight: number | null;
@@ -46,7 +43,7 @@ const ExerciseListPage = () => {
   const { addOrUpdateExercises } = useAddGymExercises();
   const [open, setOpen] = useState(false);
   const [exercise, setExercise] = useState<any>(null);
-  const categoryExercises = (exercises as ExerciseCategory)[category || ""];
+  // const categoryExercises = (exercises as ExerciseCategory)[category || ""];
 
   const [collapsedSections, setCollapsedSections] = useState<
     Record<string, boolean>
@@ -67,49 +64,50 @@ const ExerciseListPage = () => {
   const { loading, userGymsByDate } = useGetGymExercises();
   const currDate = new Date();
 
-  // const [exerciseList, setExerciseList] = useState<any>([]);
-  // const isMounted = useRef(false);
-  // const getList = async () => {
-  //   let target = category;
-  //   if (category == "leg") {
-  //     target = "lower legs";
-  //   }
-  //   try {
-  //     const url = `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${target}?limit=100&offset=0`;
-  //     const response = await fetch(url, options);
-  //     const result = await response.json();
-  //     setLoadingExercise(false);
-  //     return result;
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-  // const getDailyList = async () => {
-  //   try {
-  //     const res = await populateDailyWorkoutApi(currDate.getDay());
-  //     console.log("res", res);
-  //     return res;
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-  // useEffect(() => {
-  //   if (isMounted.current) return;
-  //   isMounted.current = true;
+  const [exerciseList, setExerciseList] = useState<any>([]);
+  const isMounted = useRef(false);
+  const getList = async () => {
+    let target = category;
+    if (category == "leg") {
+      target = "lower legs";
+    }
+    try {
+      const url = `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${target}?limit=100&offset=0`;
+      const response = await fetch(url, options);
+      const result = await response.json();
+      setLoadingExercise(false);
+      return result;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const getDailyList = async () => {
+    try {
+      const res = await populateDailyWorkoutApi(currDate.getDay());
+      console.log("res222", res);
+      return res;
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  //   const fetchData = async () => {
-  //     setLoadingExercise(true);
-  //     if (category?.includes("daily")) {
-  //       const res = await getDailyList();
-  //       setExerciseList(res);
-  //       setLoadingExercise(false);
-  //     } else {
-  //       const res = await getList();
-  //       setExerciseList(res);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    if (isMounted.current) return;
+    isMounted.current = true;
+
+    const fetchData = async () => {
+      setLoadingExercise(true);
+      if (category?.includes("daily")) {
+        const res = await getDailyList();
+        setExerciseList(res);
+        setLoadingExercise(false);
+      } else {
+        const res = await getList();
+        setExerciseList(res);
+      }
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
     if (userGymsByDate.length == 0) return;
@@ -117,25 +115,29 @@ const ExerciseListPage = () => {
     setExerciseTimes(data);
   }, [userGymsByDate]);
 
-  const variation = {
-    chest: 4,
-    back: 4,
-    leg: 4,
-    upper_arm: 4,
-    shoulder: 4,
-    lower_arm: 4,
-    cardio: 4,
-  };
+  // const variation = {
+  //   chest: 4,
+  //   back: 4,
+  //   leg: 4,
+  //   upper_arm: 4,
+  //   shoulder: 4,
+  //   lower_arm: 4,
+  //   cardio: 4,
+  // };
 
   useEffect(() => {
-    const fetchDailyWorkout = () => {
-      setLoadingExercise(true);
-      populateDailyWorkout(exercises, variation, currDate, currDate.getDay());
-      setLoadingExercise(false);
-    };
+    // const fetchDailyWorkout = () => {
+    //   setLoadingExercise(true);
+    //   populateDailyWorkout(exercises, variation, currDate, currDate.getDay());
+    //   setLoadingExercise(false);
+    // };
 
     if (category?.includes("daily")) {
-      fetchDailyWorkout();
+      console.log("sini");
+      // fetchDailyWorkout();
+
+      //api
+      getDailyList();
     }
   }, []);
 
@@ -263,6 +265,7 @@ const ExerciseListPage = () => {
   // }
 
   const groupExercisesByEquipment = (exercises: any) => {
+    loadingExercise;
     return exercises.reduce((acc: any, exercise: any) => {
       const equipment = exercise.equipment || "Other";
       if (!acc[equipment]) {
@@ -272,7 +275,10 @@ const ExerciseListPage = () => {
       return acc;
     }, {});
   };
-  const groupedExercises = groupExercisesByEquipment(categoryExercises || []);
+  // const groupedExercises = groupExercisesByEquipment(categoryExercises || []);
+
+  //api
+  const groupedExercises = groupExercisesByEquipment(exerciseList || []);
 
   if (loading) {
     return <LoadingPage />;

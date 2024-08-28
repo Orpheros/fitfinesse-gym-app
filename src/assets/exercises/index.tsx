@@ -1391,42 +1391,77 @@ export async function populateDailyWorkoutApi(dayOfWeek: number) {
       const url = `https://exercisedb.p.rapidapi.com/exercises/target/${target}?limit=10&offset=0`;
       const response = await fetch(url, options);
       const result = await response.json();
-      return result; // Ensure result is returned here
+      return result;
     } catch (error) {
       console.error(error);
-      throw error; // Throw the error to propagate it upwards
+      throw error;
     }
   };
 
   switch (dayOfWeek) {
     case 0: // Sunday
       console.log("sunday");
-      return true;
+      try {
+        const result = await fetchExercise("adductors");
+        return result;
+      } catch (error) {
+        console.error("Error fetching exercises:", error);
+        throw error;
+      }
     case 1: // Monday
       console.log("monday");
-      return true;
+      try {
+        const result = await fetchExercise("adductors");
+        return result;
+      } catch (error) {
+        console.error("Error fetching exercises:", error);
+        throw error;
+      }
     case 2: // Tuesday
       console.log("tuesday");
       try {
         const result = await fetchExercise("hamstrings");
-        return result; // Return the result from fetchExercise
+        return result;
       } catch (error) {
         console.error("Error fetching exercises:", error);
-        throw error; // Rethrow the error to propagate it upwards
+        throw error;
       }
     case 3: // Wednesday
       console.log("wednesday");
-      return true;
+      try {
+        const result = await fetchExercise("delts");
+        return result;
+      } catch (error) {
+        console.error("Error fetching exercises:", error);
+        throw error;
+      }
     case 4: // Thursday
       console.log("thursday");
-      console.log("true");
-      return true;
+      try {
+        const result = await fetchExercise("spine");
+        return result;
+      } catch (error) {
+        console.error("Error fetching exercises:", error);
+        throw error;
+      }
     case 5: // Friday
       console.log("friday");
-      return true;
+      try {
+        const result = await fetchExercise("quads");
+        return result;
+      } catch (error) {
+        console.error("Error fetching exercises:", error);
+        throw error;
+      }
     case 6: // Saturday
       console.log("saturday");
-      return true;
+      try {
+        const result = await fetchExercise("biceps");
+        return result;
+      } catch (error) {
+        console.error("Error fetching exercises:", error);
+        throw error;
+      }
     default:
       console.log("default");
       return false;
