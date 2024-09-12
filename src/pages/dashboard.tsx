@@ -110,7 +110,7 @@ const DashboardPage = () => {
       });
     };
     fetchData();
-  }, [userGymsListByGym]);
+  }, [userGymsListByGym, gymsList, userData]);
 
   const columns = [
     {
@@ -233,6 +233,7 @@ const DashboardPage = () => {
   };
 
   const showModalGym = () => {
+    console.log("gymlist", gymList);
     setIsModalOpenGym(true);
   };
 

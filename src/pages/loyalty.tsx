@@ -78,6 +78,8 @@ const LoyaltyPage = () => {
             timer: 2000,
             timerProgressBar: true,
             showConfirmButton: false,
+          }).then(() => {
+            window.location.reload();
           });
           // setCurrentLoyaltyProgress((prevProgress) => prevProgress + 1);
         }
@@ -105,6 +107,7 @@ const LoyaltyPage = () => {
     setIsModalOpen(false);
   };
 
+  result;
   if (loading) {
     return <LoadingPage loading={loading} />;
   }
@@ -160,7 +163,6 @@ const LoyaltyPage = () => {
             </div>
           </Modal>
         </div>
-        <div>{result}</div>
         <Footer />
       </div>
     </>

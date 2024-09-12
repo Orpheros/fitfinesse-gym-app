@@ -19,6 +19,7 @@ const Account = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpenGym, setIsModalOpenGym] = useState(false);
   const photo = auth.currentUser?.photoURL;
+  const [formData, setFormData] = useState({});
   const [gymForm, setGymForm] = useState({
     gym_id: 0,
     gym_name: null,
@@ -28,10 +29,10 @@ const Account = () => {
   //   gym_id: 2,
   //   gym_name: "Fithub",
   // });
-  const formData = {
-    gym_id: 2,
-    gym_name: "Fithub",
-  };
+  // const formData = {
+  //   gym_id: 2,
+  //   gym_name: "Fithub",
+  // };
 
   // const handleTextAreaChange = (event: string) => {
   //   // setTextAreaValue(event);
@@ -45,6 +46,13 @@ const Account = () => {
   };
 
   const showModal = () => {
+    if (!userData) {
+      return;
+    }
+    setFormData({
+      gym_id: gyms[0]?.gym_id,
+      gym_name: gyms[0]?.gym_name,
+    });
     setIsModalOpen(true);
   };
   const handleOk = () => {

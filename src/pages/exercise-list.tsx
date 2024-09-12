@@ -84,7 +84,6 @@ const ExerciseListPage = () => {
   const getDailyList = async () => {
     try {
       const res = await populateDailyWorkoutApi(currDate.getDay());
-      console.log("res222", res);
       return res;
     } catch (error) {
       console.error(error);
